@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import adafruit_dht
 from board import D22
 import time 
@@ -21,14 +23,3 @@ def fetch_temperature():
     logging.error(e)
     raise e
 
-# test
-if __name__ == "__main__":
-  while(True):
-    try:
-      temperature = dht_device.temperature
-      humidity = dht_device.humidity
-
-      print(temperature, humidity)
-      time.sleep(2) 
-    except Exception as e:
-      print(e)

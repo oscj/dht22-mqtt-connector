@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import paho.mqtt.client as mqtt
 import dht22_sensor_readings as dht22
 import logging
