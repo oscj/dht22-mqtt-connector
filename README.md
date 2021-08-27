@@ -10,7 +10,6 @@ In this project, a DHT22 temperature and humidity sensor is hooked up to a Raspb
 2. [Software](#software)
     - [Interfacing With The Sensor](#interfacing-with-the-sensor)
     - [Implementing MQTT Client](#implementing-mqtt-client)
-    - [Required Files](#required-files)
 
 ***
 
@@ -45,6 +44,32 @@ And here is a picture of the sensor connected to the GPIO pins. I passed the wir
 
 ### Interfacing With The Sensor
 
+There are a couple of dependencies needed to interface with the sensor. For python, the adafruit circuit python library is needed.
+To download, execute in terminal:
+
+```bash
+python3 -m pip install adafruit-circuitpython-dht
+```
+
+Then, you will want to install the libgpiod2 library to your pi, (assuming you have apt)
+
+```bash
+sudo apt-get install libgpiod2
+```
+
 ### Implementing MQTT Client
 
-### Required Files
+The MQTT client library of choice for this project is paho-mqtt. To install:
+```
+python3 -m pip install paho-mqtt
+```
+
+In order for the mqtt script to execute without errors, the program requires a .env file directory in the following format:
+
+```bash
+BROKER_ADDRESS=<broker ip address/host name here>
+BROKER_PORT=<broker mqtt port>
+CLIENT_ID=<client id>
+CLIENT_PSSWD=<client-password>
+```
+
