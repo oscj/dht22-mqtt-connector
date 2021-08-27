@@ -38,15 +38,12 @@ def on_disconnect(client: mqtt.Client, userdata: Any, flags: Dict, rc: int) -> N
 
 
 def on_connect(client: mqtt.Client, userdata: Any, flags: Dict, rc: int) -> None:
-    ''' 
-    When application connects to broker, subscribe to target topic right away and log connection information
-    '''
     logging.debug('{}  MQTT Client Connected to {}  {}'.format(
         "#" * 30, BROKER_ADDRESS, "#" * 30))
     logging.debug('Client connected with flags: {}'.format(flags))
     logging.debug('Client connected with return code: {}'.format(rc))
 
-    periodically_publish_dht22_data(client)
+    #periodically_publish_dht22_data(client)
 
 
 def periodically_publish_dht22_data(client: mqtt.Client) -> None:
