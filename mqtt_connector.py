@@ -6,6 +6,7 @@ import logging
 import time
 import json
 import os
+import random
 from dotenv import load_dotenv
 from typing import Any, Dict
 
@@ -30,6 +31,7 @@ def main():
     mqtt_client.connect(BROKER_ADDRESS, int(BROKER_PORT))
     mqtt_client.on_connect = on_connect
     mqtt_client.on_disconnect = on_disconnect
+    periodically_publish_dht22_data(mqtt_client)
     mqtt_client.loop_forever()
 
 
@@ -43,7 +45,6 @@ def on_connect(client: mqtt.Client, userdata: Any, flags: Dict, rc: int) -> None
     logging.debug('Client connected with flags: {}'.format(flags))
     logging.debug('Client connected with return code: {}'.format(rc))
 
-    #periodically_publish_dht22_data(client)
 
 
 def periodically_publish_dht22_data(client: mqtt.Client) -> None:
@@ -53,10 +54,11 @@ def periodically_publish_dht22_data(client: mqtt.Client) -> None:
                 'temp': dht22.fetch_temperature(),
                 'humidity': dht22.fetch_humidity()
             }
-            client.publish('sensor/%s'.format(CLIENT_ID), json.dumps(res))
+            client.publish('sensor/{}'.format(CLIENT_ID), json.dumps(res))
+            print('sensor/{}'.format(CLIENT_ID))
             logging.info('Published Data: ')
             logging.info(json.dumps(res)) 
-            time.sleep(2) 
+            time.sleep(2)
         except Exception as e:
             logging.error(e)
             continue

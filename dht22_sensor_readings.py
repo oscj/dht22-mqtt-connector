@@ -2,7 +2,6 @@
 
 import adafruit_dht
 from board import D22
-import time 
 import logging
 
 dht_device = adafruit_dht.DHT22(D22)
