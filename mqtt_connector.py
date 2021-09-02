@@ -9,6 +9,7 @@ import os
 import random
 from dotenv import load_dotenv
 from typing import Any, Dict
+from datetime import datetime
 
 load_dotenv()
 BROKER_ADDRESS = os.environ.get('BROKER_ADDRESS')
@@ -50,12 +51,13 @@ def on_connect(client: mqtt.Client, userdata: Any, flags: Dict, rc: int) -> None
 def periodically_publish_dht22_data(client: mqtt.Client) -> None:
     while(True):
         try:
+            dts = datetime.now() 
             res = {
                 'temp': dht22.fetch_temperature(),
-                'humidity': dht22.fetch_humidity()
+                'humidity': dht22.fetch_humidity(),
+                'dts' : dts.strftime("%d/%m/%Y %H:%M:%S")
             }
             client.publish('sensor/{}'.format(CLIENT_ID), json.dumps(res))
-            print('sensor/{}'.format(CLIENT_ID))
             logging.info('Published Data: ')
             logging.info(json.dumps(res)) 
             time.sleep(2)
